@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Java
+*.jmod
+*.class
+*.jar
+target/
+
+# Native libraries / binaries
+*.dll
+*.so
+*.dylib
+*.exe
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# WorkBuddy
+.workbuddy/
+
+# === Auto-excluded by size (>100MB, GitHub hard limit) ===
+六班信息/mcbxb/
+六班信息/23min56s.m4a
+六班信息/bak/bak/20250824住宿生大会.pptx
+六班信息/bak/bak/“一中幸福课”——积极心理学视角下课堂内外心理活动设计和实践探索.pptx
+六班信息/bak/bak/上海商学院宿舍火灾.VOB
+六班信息/bak/bak/别让任何人打乱你的人生节奏.mp4
+六班信息/bak/bak/励志短片《不负此生》-愿你别辜负自己.mp4
+六班信息/bak/bak/新时代创新成果展（学发中心+心理组251011）.pptx
+六班信息/bak/bak/看似青铜，实则王者——我们都是能力者2.0.pptx
+六班信息/bak/bak/职业与兴趣.pptx
+六班信息/bak/bak/肖申克.mp4
+六班信息/mcbxb/.minecraft/versions/1.21.11-Quilt/.cache/quilt_loader/transform-cache-client/files.zip
+六班信息/mcbxb/.minecraft/versions/1.21.11-Quilt/replay_recordings/2026_04_08_17_27_24.mcpr
+六班信息/mcbxb/java/lib/modules
+六班历史/第四集：我，中国匠人.mp4
+六班政治/2.1始终以人民为中心.pptx
+六班政治/2.2始终走在时代前列.pptx
+六班政治/9.3公正司法 电影第二十条片段/第二十条 片段.mp4
+六班政治/二十届中央纪委五次全会-当前反腐败斗争.mp4
+六班政治/高一上/!25-26政治课件/2025级新高一开学 政治学科指导 linjie精简版.pptx
+六班政治/高一上/第6讲  战略布局：协调推进“四个全面”课件-2024-2025学年习近平新时代中国特色社会主义思想学生读本.pptx
+六班政治/！！！习思课/26.3.5 未成年人保护法第58条+刑法第17条/《第17条》之后.mp4
+六班政治/！！！习思课/26.3.5 未成年人保护法第58条+刑法第17条/《第五十八条》.mp4
+六班政治/！！！习思课/余华英案 正义昭彰 铁案定谳/原视频/1余华英案回顾和跟踪.mp4
+六班政治/！！！习思课/余华英案 正义昭彰 铁案定谳/原视频/2余华英案程序正义结果正义.mp4
+六班政治/！！！习思课/余华英案 正义昭彰 铁案定谳/合并版 余华英案回顾+程序正义结果正义-.mp4
+六班政治/！！！习思课/！26年两会视频串烧 人大代表议案（为主）政协委员提案1个.mp4
+六班生物/DNA.mp4
+六班生物/高中生物实验复习视频/用高倍显微镜观察叶绿体.mp4
+六班生物/高中生物实验复习视频/观察植物细胞的有丝分裂.mp4
+六班语文/.mp4
+六班语文/视频1.mp4
+迅雷下载/红五月原图.zip
+
+# === Temp / junk files (Office lock, AppleDouble) ===
+~$*
+._*
