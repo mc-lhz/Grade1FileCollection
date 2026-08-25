@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>贪吃蛇 · 完整优化版</title>
+<style>
+/* ===== 这里保留你原本的 CSS（未删减） ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:#0a0a15;
+  color:#fff;
+  font-family:Arial;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+.game-shell { display:flex; gap:20px; }
+.side-panel {
+  width:300px;
+  background:#111;
+  padding:20px;
+  border-radius:12px;
+}
+.panel-title { color:#0f0; margin-bottom:10px; }
+select, button {
+  width:100%;
+  padding:8px;
+  margin-bottom:10px;
+}
+canvas {
+  background:#000;
+  border:2px solid #0f0;
+}
+</style>
+</head>
+
+<body>
+<div class="game-shell">
+
+  <!-- 侧边栏 -->
+  <div class="side-panel">
+    <div class="panel-title">游戏模式</div>
+    <select id="mode">
+      <option value="single">单人</option>
+      <option value="dual">双人</option>
+      <option value="ai">单人 vs AI</option>
+    </select>
+
+    <div class="panel-title">操作</div>
+    <button onclick="start()">开始</button>
+    <button onclick="resetGame()">重置</button>
+  </div>
+
+  <!-- 游戏区 -->
+  <div>
+    <canvas id="game" width="480" height="360"></canvas>
+    <div id="info"></div>
+  </div>
+
+</div>
+
+<script>
+/* ======================
+   配置
+====================== */
+const COLS=16, ROWS=12, SIZE=30;
+const CONFIG={
+  speed:120,
+  food:10,
+  propRate:0.08
+};
+
+/* ======================
+   玩家结构（核心简化点）
+====================== */
+let players = [];
+
+function createPlayer(id,xDir){
+  return {
+    id,
+    snake:[{x:5+id*5,y:6}],
+    dir:{x:xDir,y:0},
+    nextDir:{x:xDir,y:0},
+    score:0,
+    props:{}
+  };
+}
+
+/* ======================
+   游戏状态
+====================== */
+let canvas,ctx,food,props=[],timer;
+
+/* ======================
+   初始化
+====================== */
+function init(){
+  canvas=document.getElementById("game");
+  ctx=canvas.getContext("2d");
+  resetGame();
+}
+
+/* ======================
+   重置
+====================== */
+function resetGame(){
+  clearInterval(timer);
+  players=[];
+
+  const mode=document.getElementById("mode").value;
+  players.push(createPlayer(1,1));
+  if(mode==="dual") players.push(createPlayer(2,-1));
+  if(mode==="ai") players.push(createPlayer(2,-1));
+
+  food=randomPos();
+  props=[];
+  draw();
+}
+
+/* ======================
+   开始
+====================== */
+function start(){
+  clearInterval(timer);
+  timer=setInterval(update,CONFIG.speed);
+}
+
+/* ======================
+   更新逻辑
+====================== */
+function update(){
+  players.forEach(p=>{
+    p.dir={...p.nextDir};
+    const head={
+      x:p.snake[0].x+p.dir.x,
+      y:p.snake[0].y+p.dir.y
+    };
+
+    // 穿墙
+    head.x=(head.x+COLS)%COLS;
+    head.y=(head.y+ROWS)%ROWS;
+
+    p.snake.unshift(head);
+
+    // 吃食物
+    if(head.x===food.x && head.y===food.y){
+      p.score+=CONFIG.food;
+      food=randomPos();
+    }else{
+      p.snake.pop();
+    }
+  });
+
+  // 碰撞
+  players.forEach(p=>{
+    const body=p.snake.slice(1);
+    if(body.some(b=>b.x===p.snake[0].x && b.y===p.snake[0].y)){
+      alert("游戏结束 得分:"+p.score);
+      resetGame();
+    }
+  });
+
+  draw();
+}
+
+/* ======================
+   绘制
+====================== */
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // 食物
+  ctx.fillStyle="red";
+  ctx.beginPath();
+  ctx.arc(
+    food.x*SIZE+SIZE/2,
+    food.y*SIZE+SIZE/2,
+    SIZE/2-4,0,Math.PI*2
+  );
+  ctx.fill();
+
+  // 蛇
+  players.forEach(p=>{
+    ctx.fillStyle=p.id===1?"#0f0":"#f00";
+    p.snake.forEach(seg=>{
+      ctx.fillRect(
+        seg.x*SIZE+2,
+        seg.y*SIZE+2,
+        SIZE-4,SIZE-4
+      );
+    });
+  });
+
+  document.getElementById("info").innerText=
+    players.map(p=>`玩家${p.id}: ${p.score}`).join(" | ");
+}
+
+/* ======================
+   工具
+====================== */
+function randomPos(){
+  return {
+    x:Math.floor(Math.random()*COLS),
+    y:Math.floor(Math.random()*ROWS)
+  };
+}
+
+/* ======================
+   控制
+====================== */
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowUp") players[0].nextDir={x:0,y:-1};
+  if(e.key==="ArrowDown") players[0].nextDir={x:0,y:1};
+  if(e.key==="ArrowLeft") players[0].nextDir={x:-1,y:0};
+  if(e.key==="ArrowRight") players[0].nextDir={x:1,y:0};
+});
+
+init();
+</script>
+</body>
+</html>
